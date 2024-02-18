@@ -2,8 +2,6 @@ class InitialSchema < ActiveRecord::Migration[7.2]
   def change
     create_table :statement_formats do |t|
       t.string :label, null: false, index: { unique: true }
-      t.string :encoding, null: false
-      t.string :col_sep, null: false
       t.string :date_fmt, null: false
       t.string :date_col, null: false
       t.string :amount_col, null: false
