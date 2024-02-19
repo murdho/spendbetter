@@ -13,7 +13,7 @@
 ActiveRecord::Schema[7.2].define(version: 2024_02_18_130203) do
   create_table "bank_transactions", force: :cascade do |t|
     t.date "date"
-    t.string "amount", null: false
+    t.decimal "amount", null: false
     t.string "currency", null: false
     t.string "party"
     t.string "description"

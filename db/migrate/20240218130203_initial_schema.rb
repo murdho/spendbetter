@@ -41,7 +41,7 @@ class InitialSchema < ActiveRecord::Migration[7.2]
 
     create_table :bank_transactions do |t|
       t.date :date
-      t.string :amount, null: false
+      t.decimal :amount, null: false
       t.string :currency, null: false
       t.string :party
       t.string :description
