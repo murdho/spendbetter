@@ -1,0 +1,17 @@
+<div id="<%= dom_id statement %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Filename:</strong>
+    <%= statement.filename %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Statement format:</strong>
+    <%= statement.statement_format_id %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this statement", statement, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this statement", edit_statement_path(statement), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

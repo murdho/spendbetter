@@ -258,6 +258,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    smarter_csv (1.10.2)
     sqlite3 (1.7.2-aarch64-linux)
     sqlite3 (1.7.2-arm-linux)
     sqlite3 (1.7.2-arm64-darwin)
@@ -324,6 +325,7 @@ DEPENDENCIES
   redis (>= 4.0.1)
   rubocop-rails-omakase
   selenium-webdriver
+  smarter_csv (~> 1.10)
   sqlite3 (~> 1.4)
   stimulus-rails
   tailwindcss-rails
