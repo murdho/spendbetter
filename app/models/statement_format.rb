@@ -1,6 +1,8 @@
 class StatementFormat < ApplicationRecord
   include Parser
 
+  has_many :statements
+
   def column_mapping
     %i[date amount currency party description].to_h { [ _1, self["#{_1}_col"] ] }
   end

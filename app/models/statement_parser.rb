@@ -28,6 +28,7 @@ class StatementParser
       convert_values_to_numeric: false,
       keep_original_headers: true,
       key_mapping: key_mapping,
+      remove_empty_values: false,
       remove_unmapped_keys: true
     }
   end
