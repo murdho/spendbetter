@@ -19,8 +19,17 @@ class StatementParser
 
   def transactions(file)
     SmarterCSV
-      .process(file, { keep_original_headers: true, key_mapping: key_mapping, remove_unmapped_keys: true })
+      .process(file, csv_parser_options)
       .map { normalize_transaction(_1) }
+  end
+
+  def csv_parser_options
+    {
+      convert_values_to_numeric: false,
+      keep_original_headers: true,
+      key_mapping: key_mapping,
+      remove_unmapped_keys: true
+    }
   end
 
   def key_mapping
