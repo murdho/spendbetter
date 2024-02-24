@@ -32,7 +32,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_18_130203) do
     t.string "type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.check_constraint "type IN ('required', 'beneficial', 'optional', 'other', 'income')"
+    t.check_constraint "type IN ('required', 'beneficial', 'optional', 'income', 'investment', 'other')"
   end
 
   create_table "rules", force: :cascade do |t|

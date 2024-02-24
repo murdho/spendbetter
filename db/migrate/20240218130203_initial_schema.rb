@@ -24,6 +24,8 @@ class InitialSchema < ActiveRecord::Migration[7.2]
       t.string :type, null: false
 
       t.timestamps
+
+      t.check_constraint "type IN ('required', 'beneficial', 'optional', 'income', 'investment', 'other')"
     end
 
     create_table :rules do |t|
@@ -37,6 +39,9 @@ class InitialSchema < ActiveRecord::Migration[7.2]
       t.references :category, null: false, foreign_key: true, index: true
 
       t.timestamps
+
+      t.check_constraint "strictness IN ('lenient', 'strict')"
+      t.check_constraint "coalesce(date, amount, currency, party, description) IS NOT NULL"
     end
 
     create_table :bank_transactions do |t|
@@ -51,9 +56,5 @@ class InitialSchema < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
-
-    add_check_constraint :categories, "type IN ('required', 'beneficial', 'optional', 'other', 'income')"
-    add_check_constraint :rules, "strictness IN ('lenient', 'strict')"
-    add_check_constraint :rules, "coalesce(date, amount, currency, party, description) IS NOT NULL"
   end
 end
