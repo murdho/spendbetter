@@ -79,12 +79,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
   add_foreign_key "rules", "categories"
   add_foreign_key "statements", "statement_formats"
 
-  create_view "bank_transactions_matching_categories", sql_definition: <<-SQL
+  create_view "bank_transaction_matching_categories", sql_definition: <<-SQL
     SELECT bank_transactions.id AS bank_transaction_id,
-           bank_transactions.rule_id AS bank_transaction_rule_id,
-           bank_transactions.category_id AS bank_transaction_category_id,
-           rules.id        AS matching_rule_id,
-           categories.id   AS matching_category_id
+           rules.id             AS rule_id,
+           categories.id        AS category_id
     FROM bank_transactions
     LEFT JOIN rules ON (
             (rules.date IS NULL OR bank_transactions.date = rules.date)
