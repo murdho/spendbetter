@@ -13,7 +13,7 @@ module BankTransaction::Categorizable
             rule_id = matching_categories.rule_id,
             category_id = matching_categories.category_id,
             updated_at = STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW')
-          FROM (#{MatchingCategories.with_category_id.to_sql}) AS matching_categories
+          FROM (#{BankTransaction::MatchingCategories.with_category_id.to_sql}) AS matching_categories
         SQL
     end
   end
