@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_02_18_130203) do
+ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
   create_table "bank_transactions", force: :cascade do |t|
     t.date "date"
     t.decimal "amount", null: false
@@ -78,4 +78,25 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_18_130203) do
   add_foreign_key "bank_transactions", "statements"
   add_foreign_key "rules", "categories"
   add_foreign_key "statements", "statement_formats"
+
+  create_view "bank_transactions_matching_categories", sql_definition: <<-SQL
+    SELECT bank_transactions.id AS bank_transaction_id,
+           bank_transactions.rule_id AS bank_transaction_rule_id,
+           bank_transactions.category_id AS bank_transaction_category_id,
+           rules.id        AS matching_rule_id,
+           categories.id   AS matching_category_id
+    FROM bank_transactions
+    LEFT JOIN rules ON (
+            (rules.date IS NULL OR bank_transactions.date = rules.date)
+        AND (rules.amount IS NULL OR bank_transactions.amount = rules.amount)
+        AND (rules.currency IS NULL OR bank_transactions.currency = rules.currency)
+        AND (rules.party IS NULL
+                OR (rules.strictness = 'strict' AND lower(bank_transactions.party) = lower(rules.party))
+                OR (rules.strictness = 'lenient' AND bank_transactions.party LIKE '%' || rules.party || '%'))
+        AND (rules.description IS NULL
+                OR (rules.strictness = 'strict' AND lower(bank_transactions.description) = lower(rules.description))
+                OR (rules.strictness = 'lenient' AND bank_transactions.description LIKE '%' || rules.description || '%'))
+    )
+    LEFT JOIN categories ON rules.category_id = categories.id
+  SQL
 end
