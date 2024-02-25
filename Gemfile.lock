@@ -253,6 +253,9 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
+    scenic (1.7.0)
+      activerecord (>= 4.0.0)
+      railties (>= 4.0.0)
     selenium-webdriver (4.18.1)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -324,6 +327,7 @@ DEPENDENCIES
   rails!
   redis (>= 4.0.1)
   rubocop-rails-omakase
+  scenic (~> 1.7)
   selenium-webdriver
   smarter_csv (~> 1.10)
   sqlite3 (~> 1.4)

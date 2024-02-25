@@ -65,3 +65,5 @@ group :test do
 end
 
 gem "smarter_csv", "~> 1.10"
+
+gem "scenic", "~> 1.7"
