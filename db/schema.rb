@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_02_26_043846) do
+ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
   create_table "bank_transactions", force: :cascade do |t|
     t.date "date"
-    t.decimal "amount", null: false
+    t.integer "amount_cents", null: false
     t.string "currency", null: false
     t.string "party"
     t.string "description"
@@ -29,9 +29,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_26_043846) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
+    t.integer "category_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "category_type_id", null: false
     t.index ["category_type_id"], name: "index_categories_on_category_type_id"
   end
 

@@ -19,13 +19,18 @@ class InitialSchema < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    create_table :categories do |t|
-      t.string :name, null: false
-      t.string :type, null: false
+    create_table :category_types do |t|
+      t.string :name, null: false, index: { unique: true }
+      t.integer :sort_order
 
       t.timestamps
+    end
 
-      t.check_constraint "type IN ('required', 'beneficial', 'optional', 'income', 'investment', 'other')"
+    create_table :categories do |t|
+      t.string :name, null: false
+      t.references :category_type, foreign_key: true, index: true
+
+      t.timestamps
     end
 
     create_table :rules do |t|
@@ -46,7 +51,7 @@ class InitialSchema < ActiveRecord::Migration[7.2]
 
     create_table :bank_transactions do |t|
       t.date :date
-      t.decimal :amount, null: false
+      t.integer :amount_cents, null: false
       t.string :currency, null: false
       t.string :party
       t.string :description
