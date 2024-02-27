@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
+ActiveRecord::Schema[7.2].define(version: 2024_02_26_043846) do
   create_table "bank_transactions", force: :cascade do |t|
     t.date "date"
     t.decimal "amount", null: false
@@ -29,10 +29,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
-    t.string "type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.check_constraint "type IN ('required', 'beneficial', 'optional', 'income', 'investment', 'other')"
+    t.integer "category_type_id", null: false
+    t.index ["category_type_id"], name: "index_categories_on_category_type_id"
+  end
+
+  create_table "category_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "sort_order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_category_types_on_name", unique: true
   end
 
   create_table "rules", force: :cascade do |t|
@@ -76,6 +84,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
   add_foreign_key "bank_transactions", "categories"
   add_foreign_key "bank_transactions", "rules"
   add_foreign_key "bank_transactions", "statements"
+  add_foreign_key "categories", "category_types"
   add_foreign_key "rules", "categories"
   add_foreign_key "statements", "statement_formats"
 
