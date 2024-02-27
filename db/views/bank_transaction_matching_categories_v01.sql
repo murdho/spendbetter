@@ -4,7 +4,7 @@ SELECT bank_transactions.id AS bank_transaction_id,
 FROM bank_transactions
 LEFT JOIN rules ON (
         (rules.date IS NULL OR bank_transactions.date = rules.date)
-    AND (rules.amount IS NULL OR bank_transactions.amount = rules.amount)
+    AND (rules.amount_cents IS NULL OR bank_transactions.amount_cents = rules.amount_cents)
     AND (rules.currency IS NULL OR bank_transactions.currency = rules.currency)
     AND (rules.party IS NULL
             OR (rules.strictness = 'strict' AND lower(bank_transactions.party) = lower(rules.party))

@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
 
   create_table "rules", force: :cascade do |t|
     t.date "date"
-    t.string "amount"
+    t.integer "amount_cents"
     t.string "currency"
     t.string "party"
     t.string "description"
@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_rules_on_category_id"
-    t.check_constraint "coalesce(date, amount, currency, party, description) IS NOT NULL"
+    t.check_constraint "coalesce(date, amount_cents, currency, party, description) IS NOT NULL"
     t.check_constraint "strictness IN ('lenient', 'strict')"
   end
 
@@ -95,7 +95,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
     FROM bank_transactions
     LEFT JOIN rules ON (
             (rules.date IS NULL OR bank_transactions.date = rules.date)
-        AND (rules.amount IS NULL OR bank_transactions.amount = rules.amount)
+        AND (rules.amount_cents IS NULL OR bank_transactions.amount_cents = rules.amount_cents)
         AND (rules.currency IS NULL OR bank_transactions.currency = rules.currency)
         AND (rules.party IS NULL
                 OR (rules.strictness = 'strict' AND lower(bank_transactions.party) = lower(rules.party))

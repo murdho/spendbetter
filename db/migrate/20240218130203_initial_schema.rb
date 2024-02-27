@@ -35,7 +35,7 @@ class InitialSchema < ActiveRecord::Migration[7.2]
 
     create_table :rules do |t|
       t.date :date
-      t.string :amount
+      t.integer :amount_cents
       t.string :currency
       t.string :party
       t.string :description
@@ -46,7 +46,7 @@ class InitialSchema < ActiveRecord::Migration[7.2]
       t.timestamps
 
       t.check_constraint "strictness IN ('lenient', 'strict')"
-      t.check_constraint "coalesce(date, amount, currency, party, description) IS NOT NULL"
+      t.check_constraint "coalesce(date, amount_cents, currency, party, description) IS NOT NULL"
     end
 
     create_table :bank_transactions do |t|

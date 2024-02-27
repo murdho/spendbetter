@@ -1,5 +1,5 @@
 class BankTransaction < ApplicationRecord
-  include Categorizable
+  include Categorizable, Monetizable
 
   belongs_to :statement
   belongs_to :category, optional: true
