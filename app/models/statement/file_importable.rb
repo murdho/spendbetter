@@ -15,6 +15,7 @@ module Statement::FileImportable
     transaction do
       update!(filename: filename)
       insert_transactions!(transactions)
+      bank_transactions.categorize_all
     end
   end
 

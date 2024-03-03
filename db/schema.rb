@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
 
   create_table "category_types", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "sort_order"
+    t.integer "sort_order", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_category_types_on_name", unique: true
@@ -64,9 +64,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
     t.string "date_fmt", null: false
     t.string "date_col", null: false
     t.string "amount_col", null: false
-    t.string "currency_col", null: false
+    t.string "currency_col"
     t.string "party_col"
     t.string "description_col"
+    t.string "default_currency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["label"], name: "index_statement_formats_on_label", unique: true

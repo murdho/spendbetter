@@ -5,9 +5,10 @@ class InitialSchema < ActiveRecord::Migration[7.2]
       t.string :date_fmt, null: false
       t.string :date_col, null: false
       t.string :amount_col, null: false
-      t.string :currency_col, null: false
+      t.string :currency_col
       t.string :party_col
       t.string :description_col
+      t.string :default_currency
 
       t.timestamps
     end

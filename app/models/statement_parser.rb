@@ -1,6 +1,4 @@
 class StatementParser
-  include TransactionNormalizer
-
   def initialize(statement_format)
     @statement_format = statement_format
   end
@@ -20,7 +18,7 @@ class StatementParser
   def transactions(file)
     SmarterCSV
       .process(file, csv_parser_options)
-      .map { normalize_transaction(_1) }
+      .map { statement_format.normalize_transaction(_1) }
   end
 
   def csv_parser_options
