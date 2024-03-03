@@ -22,8 +22,7 @@ class StatementsController < ApplicationController
   end
 
   def create
-    @statement = Statement.import_from_file(statement_from_file_params)
-
+    @statement = Statement.import_from_file(create_from_file_params)
     redirect_to statement_url(@statement), notice: "Statement was successfully created."
   end
 
@@ -72,7 +71,7 @@ class StatementsController < ApplicationController
     @statement = Statement.find(params[:id])
   end
 
-  def statement_from_file_params
+  def create_from_file_params
     params.require(:statement).permit(:file, :statement_format_id)
   end
 

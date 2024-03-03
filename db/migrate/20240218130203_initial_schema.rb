@@ -21,7 +21,7 @@ class InitialSchema < ActiveRecord::Migration[7.2]
 
     create_table :category_types do |t|
       t.string :name, null: false, index: { unique: true }
-      t.integer :sort_order
+      t.integer :sort_order, null: false
 
       t.timestamps
     end

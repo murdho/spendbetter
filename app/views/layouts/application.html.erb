@@ -19,7 +19,14 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <header class="container mx-auto">
+      <ul class="list-none p-5 space-x-10 flex">
+        <li><%= link_to "Overview", root_path %></li>
+        <li><%= link_to "Statements", statements_path %></li>
+        <li><%= link_to "Statement formats", statement_formats_path %></li>
+      </ul>
+    </header>
+    <main class="container mx-auto mt-14 px-5 flex">
       <%= yield %>
     </main>
   </body>

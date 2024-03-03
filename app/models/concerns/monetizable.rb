@@ -10,4 +10,6 @@ module Monetizable
   class_methods do
     def amount_optional? = column_for_attribute(AMOUNT_CENTS).null
   end
+
+  def as_money(attribute) = Money.new(attributes[attribute.to_s], currency)
 end
