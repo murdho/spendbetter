@@ -3,7 +3,7 @@ class StatementsController < ApplicationController
 
   # GET /statements or /statements.json
   def index
-    @statements = Statement.all
+    @statements = Statement.for_views
   end
 
   # GET /statements/1 or /statements/1.json
@@ -68,7 +68,7 @@ class StatementsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_statement
-    @statement = Statement.find(params[:id])
+    @statement = Statement.for_views.find(params[:id])
   end
 
   def create_from_file_params
