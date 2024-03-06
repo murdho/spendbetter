@@ -22,24 +22,29 @@ class StatementsController < ApplicationController
   end
 
   def create
-    @statement = Statement.import_from_file(create_from_file_params)
-    redirect_to statement_url(@statement), notice: "Statement was successfully created."
+    statements = Statement.transaction do
+      create_from_files_params[:files].map do |file|
+        Statement.import_from_file(create_from_files_params.except(:files).merge(file: file))
+      end
+    end
+
+    redirect_to statement_url(statements.first), notice: "#{statements.count} statement(s) successfully created."
   end
 
   # POST /statements or /statements.json
-  def create_og
-    @statement = Statement.new(statement_params)
-
-    respond_to do |format|
-      if @statement.save
-        format.html { redirect_to statement_url(@statement), notice: "Statement was successfully created." }
-        format.json { render :show, status: :created, location: @statement }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @statement.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def create_og
+  #   @statement = Statement.new(statement_params)
+  #
+  #   respond_to do |format|
+  #     if @statement.save
+  #       format.html { redirect_to statement_url(@statement), notice: "Statement was successfully created." }
+  #       format.json { render :show, status: :created, location: @statement }
+  #     else
+  #       format.html { render :new, status: :unprocessable_entity }
+  #       format.json { render json: @statement.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /statements/1 or /statements/1.json
   def update
@@ -71,8 +76,8 @@ class StatementsController < ApplicationController
     @statement = Statement.for_views.find(params[:id])
   end
 
-  def create_from_file_params
-    params.require(:statement).permit(:file, :statement_format_id)
+  def create_from_files_params
+    params.require(:statement).permit(:statement_format_id, files: [])
   end
 
   # Only allow a list of trusted parameters through.
