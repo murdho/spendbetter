@@ -1,40 +1,83 @@
-<div>
-  <h1 class="font-bold text-4xl">Overview</h1>
-  <div>
-    <% @bank_transactions.each do |month, by_category_type| %>
-      <h2 class="font-bold text-xl mt-6 mb-2" id="month-<%= month %>"><%= month %></h2>
+<%# content_for :head do %>
+  <%#= turbo_refreshes_with(method: :morph, scroll: :preserve) %>
+<%# end %>
 
-      <table class="min-w-full divide-y divide-gray-300">
-        <thead>
-        <tr>
-          <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Category</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Currency</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Transactions</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Incoming</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Outgoing</th>
-          <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Total</th>
-        </tr>
-        </thead>
-        <% by_category_type.each do |category_type, transactions| %>
-          <tr class="border-t border-gray-200">
-            <th colspan="6" scope="colgroup" class="bg-gray-50 py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"><%= category_type || "Uncategorized" %></th>
-          </tr>
-          <tbody class="divide-y divide-gray-200 bg-white">
-          <% transactions.each do |transaction| %>
-            <tr>
-              <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-900"><%= transaction.category_name || "—" %></td>
-              <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.currency %></td>
-              <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.count %></td>
-              <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.as_money(:incoming_cents) %></td>
-              <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.as_money(:outgoing_cents) %></td>
-              <td class="whitespace-nowrap px-2 py-2 text-sm font-semibold text-right <%= money_color_class(transaction.total_cents, "text-green-600", "text-red-600", "text-gray-600") %>">
-                <%= money transaction.as_money(:total_cents) %>
-              </td>
-            </tr>
+<div class="min-w-full">
+  <h1 class="font-bold text-4xl">Overview</h1>
+  <div class="w-full">
+    <% @bank_transactions_for_overview.each do |month, by_category_type| %>
+      <div class="flex gap-10">
+        <div class="w-1/2">
+          <h2 class="font-bold text-2xl mt-16 mb-4" id="month-<%= month %>"><%= Date.parse("#{month}-01").strftime("%B %Y") %></h2>
+
+          <div class="ring-1 ring-gray-300 rounded-lg overflow-scroll">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead>
+              <tr>
+                <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Category</th>
+                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Transactions</th>
+                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Currency</th>
+                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Incoming</th>
+                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Outgoing</th>
+                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Total</th>
+              </tr>
+              </thead>
+              <% by_category_type.each do |category_type, transactions| %>
+                <tr class="border-t border-gray-200">
+                  <th colspan="6" scope="colgroup" class="bg-gray-50 py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"><%= category_type || "Uncategorized" %></th>
+                </tr>
+                <tbody class="divide-y divide-gray-200">
+                <% transactions.each do |transaction| %>
+                  <tr>
+                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-900"><%= transaction.category_name || "—" %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.count %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.currency %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.as_money(:incoming_cents) %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.as_money(:outgoing_cents) %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm font-semibold text-right <%= money_color_class(transaction.total_cents, "text-green-600", "text-red-600", "text-gray-600") %>">
+                      <%= money transaction.as_money(:total_cents) %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="w-1/2">
+          <% if @bank_transactions_for_details[month] %>
+            <h2 class="font-bold text-2xl mt-16 mb-4"><%= "Uncategorized" %></h2>
+
+            <div class="ring-1 ring-gray-300 rounded-lg overflow-scroll">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead>
+                <tr>
+                  <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Date</th>
+                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Amount</th>
+                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Currency</th>
+                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Party</th>
+                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
+                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Rule</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @bank_transactions_for_details[month]&.each do |transaction| %>
+                  <tr class="divide-y divide-gray-200">
+                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 text-left"><%= transaction.date || "—" %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.amount %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left"><%= transaction.currency %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left cursor-help" title="<%= transaction.party %>"><%= transaction.party&.truncate(20) %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left cursor-help" title="<%= transaction.description %>"><%= transaction.description&.truncate(25) %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left"><%= transaction.rule_id %></td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
           <% end %>
-        <% end %>
-        </tbody>
-      </table>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

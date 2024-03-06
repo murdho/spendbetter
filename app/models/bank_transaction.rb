@@ -33,4 +33,13 @@ class BankTransaction < ApplicationRecord
       .group_by(&:month)
       .transform_values { _1.group_by(&:category_type) }
   end
+
+  def self.for_details(category_id)
+    all
+      .where(category_id: category_id)
+      .with_month
+      .order(:date)
+      .select(Arel.star)
+      .group_by(&:month)
+  end
 end
