@@ -1,88 +1,14 @@
 <div class="min-w-full">
   <h1 class="font-bold text-4xl">Overview</h1>
   <div class="w-full">
-    <% @bank_transactions_for_overview.each do |month, by_category_type| %>
+    <% @bank_transactions_for_overview.each do |month, transactions_by_category_type| %>
       <div class="flex gap-10">
         <div class="w-1/2">
-          <h2 class="font-bold text-2xl mt-16 mb-4" id="month-<%= month %>"><%= Date.parse("#{month}-01").strftime("%B %Y") %></h2>
-
-          <div class="ring-1 ring-gray-300 rounded-lg overflow-scroll">
-            <table class="min-w-full divide-y divide-gray-300">
-              <thead>
-              <tr>
-                <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Category</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Transactions</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Currency</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Incoming</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Outgoing</th>
-                <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Total</th>
-              </tr>
-              </thead>
-              <% by_category_type.each do |category_type, transactions| %>
-                <tr class="border-t border-gray-200">
-                  <th colspan="6" scope="colgroup" class="bg-gray-50 py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"><%= category_type || "Uncategorized" %></th>
-                </tr>
-                <tbody class="divide-y divide-gray-200">
-                <% transactions.each do |transaction| %>
-                  <tr>
-                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-900">
-                      <%= link_to (transaction.category_name || "—"), { selected_category_id: transaction.category_id }, "data-turbo-action": :replace %>
-                    </td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.count %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.currency %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.as_money(:incoming_cents) %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.as_money(:outgoing_cents) %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm font-semibold text-right <%= money_color_class(transaction.total_cents, "text-green-600", "text-red-600", "text-gray-600") %>">
-                      <%= money transaction.as_money(:total_cents) %>
-                    </td>
-                  </tr>
-                <% end %>
-              <% end %>
-              </tbody>
-            </table>
-          </div>
+          <%= render partial: "summary", locals: { month: month, transactions_by_category_type: transactions_by_category_type } %>
         </div>
 
         <div class="w-1/2">
-          <% if (bank_transactions_for_month = @bank_transactions_for_details[month]) %>
-            <h2 class="font-bold text-2xl mt-16 mb-4">
-              <% if selected_category_id.present? %>
-                <%= bank_transactions_for_month.first.category_name %>
-                <span class="cursor-pointer float-end">
-                  <%= link_to "⨯", { selected_category_id: nil }, "data-turbo-action": :replace %>
-                </span>
-              <% else %>
-                Uncategorized
-              <% end %>
-            </h2>
-
-            <div class="ring-1 ring-gray-300 rounded-lg overflow-scroll">
-              <table class="min-w-full divide-y divide-gray-300">
-                <thead>
-                <tr>
-                  <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Date</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Amount</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Currency</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Party</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Rule</th>
-                </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                <% bank_transactions_for_month.each do |transaction| %>
-                  <tr>
-                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 text-left"><%= transaction.date || "—" %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.amount %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left"><%= transaction.currency %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left" title="<%= transaction.party %>"><%= transaction.party&.truncate(20) %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left" title="<%= transaction.description %>"><%= transaction.description&.truncate(25) %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left"><%= transaction.rule_id %></td>
-                  </tr>
-                <% end %>
-                </tbody>
-              </table>
-            </div>
-          <% end %>
+          <%= render partial: "details", locals: { bank_transactions: @bank_transactions_for_details[month] } %>
         </div>
       </div>
     <% end %>
