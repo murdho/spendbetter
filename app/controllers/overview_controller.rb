@@ -1,12 +1,12 @@
 class OverviewController < ApplicationController
+  helper_method :selected_category_id
+
   def index
     @bank_transactions_for_overview = BankTransaction.for_overview
-    @bank_transactions_for_details = BankTransaction.for_details(detail_category_id)
+    @bank_transactions_for_details = BankTransaction.for_details(selected_category_id)
   end
 
-  private
-
-  def detail_category_id
-    params[:detail_category_id]
+  def selected_category_id
+    params[:selected_category_id]
   end
 end
