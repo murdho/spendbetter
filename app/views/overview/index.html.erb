@@ -30,7 +30,10 @@
                 <% transactions.each do |transaction| %>
                   <tr>
                     <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-900"><%= transaction.category_name || "—" %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.count %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right">
+                      <%= link_to transaction.count, { detail_category_id: transaction.category_id }, "data-turbo-action": :replace %>
+                      <%#= transaction.count %>
+                    </td>
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.currency %></td>
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.as_money(:incoming_cents) %></td>
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.as_money(:outgoing_cents) %></td>
@@ -46,8 +49,8 @@
         </div>
 
         <div class="w-1/2">
-          <% if @bank_transactions_for_details[month] %>
-            <h2 class="font-bold text-2xl mt-16 mb-4"><%= "Uncategorized" %></h2>
+          <% if (bank_transactions_for_month = @bank_transactions_for_details[month]) %>
+            <h2 class="font-bold text-2xl mt-16 mb-4"><%= bank_transactions_for_month.first.category_name || "Uncategorized" %></h2>
 
             <div class="ring-1 ring-gray-300 rounded-lg overflow-scroll">
               <table class="min-w-full divide-y divide-gray-300">
@@ -61,14 +64,14 @@
                   <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Rule</th>
                 </tr>
                 </thead>
-                <tbody>
-                <% @bank_transactions_for_details[month]&.each do |transaction| %>
-                  <tr class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-200">
+                <% bank_transactions_for_month.each do |transaction| %>
+                  <tr>
                     <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 text-left"><%= transaction.date || "—" %></td>
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money transaction.amount %></td>
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left"><%= transaction.currency %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left cursor-help" title="<%= transaction.party %>"><%= transaction.party&.truncate(20) %></td>
-                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left cursor-help" title="<%= transaction.description %>"><%= transaction.description&.truncate(25) %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left" title="<%= transaction.party %>"><%= transaction.party&.truncate(20) %></td>
+                    <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left" title="<%= transaction.description %>"><%= transaction.description&.truncate(25) %></td>
                     <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-left"><%= transaction.rule_id %></td>
                   </tr>
                 <% end %>

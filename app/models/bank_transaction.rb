@@ -36,10 +36,11 @@ class BankTransaction < ApplicationRecord
 
   def self.for_details(category_id)
     all
+      .left_joins(:category)
       .where(category_id: category_id)
       .with_month
       .order(:date)
-      .select(Arel.star)
+      .select("bank_transactions.*, categories.name AS category_name")
       .group_by(&:month)
   end
 end

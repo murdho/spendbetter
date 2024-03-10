@@ -12,9 +12,7 @@ class StatementsController < ApplicationController
 
   # GET /statements/new
   def new
-    @statement = Statement.new(
-      statement_format: StatementFormat.first
-    )
+    @statement = Statement.new
   end
 
   # GET /statements/1/edit
