@@ -29,21 +29,6 @@ class StatementsController < ApplicationController
     redirect_to statement_url(statements.first), notice: "#{statements.count} statement(s) successfully created."
   end
 
-  # POST /statements or /statements.json
-  # def create_og
-  #   @statement = Statement.new(statement_params)
-  #
-  #   respond_to do |format|
-  #     if @statement.save
-  #       format.html { redirect_to statement_url(@statement), notice: "Statement was successfully created." }
-  #       format.json { render :show, status: :created, location: @statement }
-  #     else
-  #       format.html { render :new, status: :unprocessable_entity }
-  #       format.json { render json: @statement.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
   # PATCH/PUT /statements/1 or /statements/1.json
   def update
     respond_to do |format|
@@ -62,7 +47,7 @@ class StatementsController < ApplicationController
     @statement.destroy!
 
     respond_to do |format|
-      format.html { redirect_to statements_url, notice: "Statement was successfully destroyed." }
+      format.html { redirect_to statements_url, notice: "Statement '#{@statement.filename}' was successfully destroyed." }
       format.json { head :no_content }
     end
   end

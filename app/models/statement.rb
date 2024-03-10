@@ -9,5 +9,5 @@ class Statement < ApplicationRecord
                            .left_joins(:bank_transactions)
                            .select("statements.*, statement_formats.label AS statement_format_label, count(bank_transactions.id) AS bank_transactions_count")
                            .group(:id)
-                           .order(created_at: :desc) }
+                           .order(filename: :desc) }
 end
