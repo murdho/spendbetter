@@ -21,7 +21,7 @@ class BankTransaction < ApplicationRecord
 
   scope :for_month, ->(month) { with_month.where("month = ?", month) }
 
-  def self.for_overview
+  def self.for_summary
     all
       .by_month
       .by_category

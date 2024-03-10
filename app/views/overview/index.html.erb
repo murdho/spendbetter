@@ -5,7 +5,7 @@
   </div>
 
   <div class="w-full">
-    <% @bank_transactions_for_overview.each do |month, transactions_by_category_type| %>
+    <% @bank_transactions_for_summary.each do |month, transactions_by_category_type| %>
       <div class="flex gap-10">
         <div class="w-1/2">
           <%= render partial: "summary", locals: { month: month, transactions_by_category_type: transactions_by_category_type } %>
