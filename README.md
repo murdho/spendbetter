@@ -1,10 +1,12 @@
 # spendbetter
 
+![Screenshot of Overview page](.github/assets/screenshot.png)
+
 This is my own simple expense tracker.
 
-It's not finished nor done yet, I'm evolving it while using it and discovering how I'd like it to behave.
+It's not finished nor done yet. It's evolving while I'm using it and discovering how I'd like it to behave.
 
-Nevertheless, you are welcome to explore and take ideas what you find useful.
+Nevertheless, you are welcome to explore the ideas and take whatever you find useful.
 
 ## todo
 
