@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
+ActiveRecord::Schema[7.2].define(version: 2024_03_10_173907) do
   create_table "bank_transactions", force: :cascade do |t|
     t.date "date"
     t.integer "amount_cents", null: false
@@ -70,6 +70,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_02_24_104324) do
     t.string "default_currency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "payor_col"
+    t.string "payee_col"
     t.index ["label"], name: "index_statement_formats_on_label", unique: true
   end
 

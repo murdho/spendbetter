@@ -5,6 +5,7 @@ module StatementFormat::TransactionNormalizer
     transaction
       .tap { normalize_date _1 }
       .tap { normalize_amount_and_currency _1 }
+      .tap { normalize_party _1 }
   end
 
   private
@@ -13,6 +14,14 @@ module StatementFormat::TransactionNormalizer
     transaction[:date] = Date.strptime(transaction[:date], date_fmt)
   rescue Date::Error
     nil
+  end
+
+  def normalize_party(transaction)
+    unless transaction[:party]
+      payor = transaction.delete(:payor)
+      payee = transaction.delete(:payee)
+      transaction[:party] = transaction[:amount_cents].positive? ? payor : payee
+    end
   end
 
   def normalize_amount_and_currency(transaction)

@@ -6,9 +6,13 @@ module ScenicSqlite
     def to_schema
       <<~DEFINITION.indent(2)
         create_view #{Scenic::UnaffixedName.for(name).inspect}, sql_definition: <<-\SQL
-        #{escaped_definition.indent(2)}
+        #{escaped_and_formatted_definition}
         SQL
       DEFINITION
+    end
+
+    def escaped_and_formatted_definition
+      escaped_definition.prepend("    ").strip_heredoc.indent(2)
     end
   end
 

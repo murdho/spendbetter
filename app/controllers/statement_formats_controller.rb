@@ -65,6 +65,7 @@ class StatementFormatsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def statement_format_params
-      params.require(:statement_format).permit(:label, :date_fmt, :date_col, :amount_col, :currency_col, :party_col, :description_col)
+      params.require(:statement_format).permit(:label, :date_fmt, :date_col, :amount_col, :currency_col, :party_col, :payor_col,
+                                               :payee_col, :description_col, :default_currency_col)
     end
 end
