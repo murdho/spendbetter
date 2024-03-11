@@ -19,15 +19,15 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <header class="container mx-auto">
+  <body class="mx-10">
+    <header class="mx-auto">
       <ul class="list-none p-5 space-x-10 flex">
         <li><%= link_to "Overview", root_path %></li>
         <li><%= link_to "Statements", statements_path %></li>
         <li><%= link_to "Statement formats", statement_formats_path %></li>
       </ul>
     </header>
-    <main class="container mx-auto my-14 px-5 flex">
+    <main class="mx-auto my-14 px-5 flex">
       <%= yield %>
     </main>
   </body>
