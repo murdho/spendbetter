@@ -1,24 +1,16 @@
-# README
+# spendbetter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is my own simple expense tracker.
 
-Things you may want to cover:
+It's not finished nor done yet, I'm evolving it while using it and discovering how I'd like it to behave.
 
-* Ruby version
+Nevertheless, you are welcome to explore and take ideas what you find useful.
 
-* System dependencies
+## todo
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- [ ] Sufficient test coverage
+- [ ] Better readme
+- [ ] Walkthrough video
+- [ ] Duplicate/overlap handling
+- [ ] Dashboard with custom queries
+- [ ] Demo environment
