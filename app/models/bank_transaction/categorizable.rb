@@ -15,6 +15,10 @@ module BankTransaction::Categorizable
             updated_at = STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW')
           FROM (#{BankTransaction::MatchingCategories.with_category_id.to_sql}) AS matching_categories
         SQL
+
+      # FIXME: this is a hacky way to broadcast refresh, should be replaced
+      # with something proper (or maybe get rid of the #update_all above?)
+      BankTransaction.last.broadcast_refresh_to :overview
     end
   end
 end
