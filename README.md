@@ -1,26 +1,24 @@
-# spendbetter
+# README
 
-![Screenshot of Overview page](.github/assets/screenshot.png)
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-This is my own simple expense tracker.
+Things you may want to cover:
 
-It's neither finished nor done yet. It evolves while I'm using it and discovering how I'd like it to behave.
+* Ruby version
 
-Nevertheless, you are welcome to explore the ideas and take whatever you find useful.
+* System dependencies
 
-## todo
+* Configuration
 
-- [x] Rudimentary statement import supporting different statement formats
-- [x] Custom SQLite adapter for Scenic gem
-- [x] Database view for matching bank transactions to categories using rules
-- [x] Scopes for efficiently finding bank transactions for overview page
-- [x] Overview page summary displaying categories by month and by category type
-- [x] Overview page details displaying transactions for selected category (or uncategorized transactions)
-- [x] Turbo morphing for swift interactions 
-- [ ] Sufficient test coverage
-- [ ] Better readme
-- [ ] Walkthrough video
-- [ ] Duplicate/overlap handling
-- [ ] Dashboard with custom queries
-- [ ] Demo environment
-- [ ] ... and more
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...

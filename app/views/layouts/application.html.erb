@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "spendbetter" %></title>
+    <title><%= content_for(:title) || "Spendbetter" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <%= turbo_refreshes_with(method: :morph, scroll: :preserve) %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -14,21 +13,12 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    
+    <%= stylesheet_link_tag :all, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <header class="container mx-auto">
-      <ul class="list-none p-5 space-x-10 flex">
-        <li><%= link_to "Overview", root_path %></li>
-        <li><%= link_to "Statements", statements_path %></li>
-        <li><%= link_to "Statement formats", statement_formats_path %></li>
-      </ul>
-    </header>
-    <main class="container mx-auto my-14 px-5 flex">
-      <%= yield %>
-    </main>
+    <%= yield %>
   </body>
 </html>
