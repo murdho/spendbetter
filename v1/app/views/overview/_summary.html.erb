@@ -1,0 +1,39 @@
+<h2 class="font-bold text-2xl mt-16 mb-4" id="month-<%= month %>"><%= month_tag month %></h2>
+
+<div class="ring-1 ring-gray-300 rounded-lg overflow-scroll">
+  <table class="min-w-full divide-y divide-gray-300">
+    <thead>
+    <tr>
+      <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Category</th>
+      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Transactions</th>
+      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Currency</th>
+      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Incoming</th>
+      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Outgoing</th>
+      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-right text-sm font-semibold text-gray-900">Total</th>
+    </tr>
+    </thead>
+    <% transactions_by_category_type.each do |category_type, transactions| %>
+      <tr class="border-t border-gray-200">
+        <th colspan="6" scope="colgroup" class="bg-gray-50 py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">
+          <%= category_type || "Uncategorized" %>
+        </th>
+      </tr>
+      <tbody class="divide-y divide-gray-200">
+      <% transactions.each do |transaction| %>
+        <tr>
+          <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-900">
+            <%= link_to_select_category transaction.category_name, transaction.category_id %>
+          </td>
+          <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.count %></td>
+          <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= transaction.currency %></td>
+          <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money_tag transaction.as_money(:incoming_cents) %></td>
+          <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-right"><%= money_tag transaction.as_money(:outgoing_cents) %></td>
+          <td class="whitespace-nowrap px-2 py-2 text-sm font-semibold text-right <%= money_color(transaction.total_cents, "text-green-600", "text-red-600", "text-gray-600") %>">
+            <%= money_tag transaction.as_money(:total_cents) %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+</div>

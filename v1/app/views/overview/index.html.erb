@@ -1,0 +1,24 @@
+<%= turbo_stream_from :overview %>
+
+<div class="min-w-full">
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Overview</h1>
+    <%= link_to "Upload statement(s)", new_statement_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div class="w-full">
+    <% @bank_transactions_for_summary.each do |month, transactions_by_category_type| %>
+      <div class="flex gap-10">
+        <div class="w-1/2">
+          <%= render partial: "summary", locals: { month: month, transactions_by_category_type: transactions_by_category_type } %>
+        </div>
+
+        <div class="w-1/2">
+          <% if @bank_transactions_for_details[month] %>
+            <%= render partial: "details", locals: { bank_transactions: @bank_transactions_for_details[month] } %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
