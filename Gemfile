@@ -64,7 +64,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "smarter_csv", "~> 1.10"
+gem "smarter_csv", "~> 1.11"
 
 gem "scenic", "~> 1.7"
 
