@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2024_12_26_063839) do
+ActiveRecord::Schema[8.1].define(version: 2024_12_26_080651) do
+  create_table "entries", force: :cascade do |t|
+    t.date "date"
+    t.decimal "amount", null: false
+    t.string "currency", null: false
+    t.string "party"
+    t.string "message"
+    t.string "external_id"
+    t.integer "folder_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["folder_id"], name: "index_entries_on_folder_id"
+  end
+
   create_table "folders", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "entries", "folders"
 end

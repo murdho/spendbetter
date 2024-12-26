@@ -1,0 +1,46 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+bus_ticket:
+  date: 2024-12-26
+  amount: -2.95
+  currency: EUR
+  party: HSL Mobiili
+  message:
+  external_id: 3fd6f8d5dc05dffcfe6965f1cf421286
+  folder: main
+
+usd_dividends:
+  date: 2024-12-25
+  amount: 8.50
+  currency: USD
+  party:
+  message: Dividends (ABC)
+  external_id: 99d3cca8ccd4d9f3214c6f4b43e0922b
+  folder: investments
+
+eur_dividends:
+  date: 2024-12-24
+  amount: 5.80
+  currency: EUR
+  party:
+  message: Dividends (XYZ)
+  external_id: a1dac1441c88510f11241f3f8bfcb83e
+  folder: investments
+
+card_monthly_fee:
+  date: 2024-12-23
+  amount: -1.00
+  currency: EUR
+  party:
+  message: Card monthly fee
+  external_id: d95e97bc16a9c0df937f848142d9cd0f
+  folder: main
+
+manual_entry:
+  date: 2024-12-22
+  amount: 25.00
+  currency: EUR
+  party: Jimmy
+  message: Got some dough
+  external_id:
+  folder: cash

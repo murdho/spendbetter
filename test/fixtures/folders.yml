@@ -5,3 +5,6 @@ main:
 
 investments:
   name: Investments
+
+cash:
+  name: Cash
