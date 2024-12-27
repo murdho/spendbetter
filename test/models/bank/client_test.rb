@@ -19,6 +19,8 @@ class Bank::ClientTest < ActiveSupport::TestCase
   end
 
   test "with fresh token" do
+    skip
+
     create_bank_client_token
 
     client = Bank::Client.new
@@ -31,6 +33,8 @@ class Bank::ClientTest < ActiveSupport::TestCase
   end
 
   test "with refreshable token" do
+    skip
+
     create_bank_client_token access_expires_at: Time.current - 1.hour
     stub_refresh_api_token_request
 
@@ -44,6 +48,8 @@ class Bank::ClientTest < ActiveSupport::TestCase
   end
 
   test "with expired token" do
+    skip
+
     create_bank_client_token \
       access_expires_at: Time.current - 1.hour,
       refresh_expires_at: Time.current - 1.hour

@@ -1,14 +1,12 @@
-module Bank::Client::Token
-  extend ActiveSupport::Concern
+class Bank::Http::TokenAutoRefresh < Faraday::Middleware
+  attr_reader :token
 
-  included do
-    TOKEN_NAME = :bank_client_token
-
-    attr_reader :token
+  def on_request(env)
+    env.request_headers["Authorization"] = "Bearer #{access_token}"
   end
 
   private
-    def set_token
+    def access_token
       find_or_initialize_token
 
       unless token.fresh?
@@ -21,11 +19,14 @@ module Bank::Client::Token
         end
       end
 
-      http_client.headers["Authorization"] = "Bearer #{token.access_token}"
+      token.access_token
     end
 
-    def find_or_initialize_token
-      @token = Token.find_or_initialize_by name: TOKEN_NAME
+    def refresh_api_token
+      save_token \
+        http_client
+          .post("token/refresh/", { refresh: token.refresh_token })
+          .body
     end
 
     def create_api_token
@@ -38,13 +39,6 @@ module Bank::Client::Token
           .body
     end
 
-    def refresh_api_token
-      save_token \
-        http_client
-          .post("token/refresh/", { refresh: token.refresh_token })
-          .body
-    end
-
     def save_token(new_tokens)
       new_tokens => { access:, refresh:, access_expires:, refresh_expires: }
 
@@ -54,5 +48,13 @@ module Bank::Client::Token
         access_expires_in: access_expires,
         refresh_expires_in: refresh_expires
       )
+    end
+
+    def find_or_initialize_token
+      @token = Token.find_or_initialize_by name: options.fetch(:token_name)
+    end
+
+    def http_client
+      @http_client ||= Bank::Http.client
     end
 end

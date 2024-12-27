@@ -1,32 +1,59 @@
 class Bank::Account
-  attr_reader :id
+  include Bank::Connection
 
-  def initialize(id)
+  attr_reader :id, :iban, :institution_id
+
+  def initialize(id:, **attrs)
     @id = id
-  end
-
-  def info
-    @info ||= client.account_info(id)
+    @iban = attrs[:iban]
+    @institution_id = attrs[:institution_id]
   end
 
   def balances
-    @balances ||= client.account_balances(id)
+    @balances ||= \
+      connection
+        .get("accounts/#{id}/balances/")
+        .body
+        .dig(:balances)
   end
 
   def details
-    @details ||= client.account_details(id)
+    @details ||= \
+      connection
+        .get("accounts/#{id}/details/")
+        .body
+        .dig(:account)
   end
 
   def transactions(from: nil, to: nil)
     if from || to
-      client.account_transactions(id, from:, to:)
+      fetch_transactions(from:, to:)
     else
-      @transactions ||= client.account_transactions(id, from:, to:)
+      @transactions ||= fetch_transactions(from:, to:)
+    end
+  end
+
+  class << self
+    def find(id)
+      connection
+        .get("accounts/#{id}/")
+        .body
+        .then { new(**it) }
     end
   end
 
   private
-    def client
-      @client ||= Bank::Client.new
+    def fetch_transactions(from: nil, to: nil)
+      connection
+        .get("accounts/#{id}/transactions/", {
+          date_from: format_date(from),
+          date_to: format_date(to)
+        }.compact)
+        .body
+        .dig(:transactions, :booked)
+    end
+
+    def format_date(date_or_datetime_or_string)
+      date_or_datetime_or_string.try(:strftime, "%Y-%m-%d") || date_or_datetime_or_string
     end
 end
