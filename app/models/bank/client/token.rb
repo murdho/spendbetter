@@ -25,20 +25,24 @@ module Bank::Client::Token
     end
 
     def find_or_initialize_token
-      @token ||= Token.find_or_initialize_by name: TOKEN_NAME
+      @token = Token.find_or_initialize_by name: TOKEN_NAME
     end
 
     def create_api_token
       save_token \
-        http_client.post("token/new/", {
-          secret_id: Rails.application.credentials.gocardless.secret_id,
-          secret_key: Rails.application.credentials.gocardless.secret_key
-        }).body
+        http_client
+          .post("token/new/", {
+            secret_id: Rails.application.credentials.gocardless.secret_id,
+            secret_key: Rails.application.credentials.gocardless.secret_key
+          })
+          .body
     end
 
     def refresh_api_token
       save_token \
-        http_client.post("token/refresh/", { refresh: token.refresh_token }).body
+        http_client
+          .post("token/refresh/", { refresh: token.refresh_token })
+          .body
     end
 
     def save_token(new_tokens)
