@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+fresh:
+  name: a fresh one
+  access_token: <%= SecureRandom.hex %>
+  refresh_token: <%= SecureRandom.hex %>
+  access_expires_at: <%= Time.current + 1.hour %>
+  refresh_expires_at: <%= Time.current + 1.day %>
+
+refreshable:
+  name: a refreshable one
+  access_token: <%= SecureRandom.hex %>
+  refresh_token: <%= SecureRandom.hex %>
+  access_expires_at: <%= Time.current - 1.hour %>
+  refresh_expires_at: <%= Time.current + 1.day %>
+
+expired:
+  name: an expired one
+  access_token: <%= SecureRandom.hex %>
+  refresh_token: <%= SecureRandom.hex %>
+  access_expires_at: <%= Time.current - 1.day %>
+  refresh_expires_at: <%= Time.current - 1.hour %>
