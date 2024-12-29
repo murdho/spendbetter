@@ -3,13 +3,6 @@ class Bank::Institution
 
   attr_reader :id, :name, :transaction_total_days, :max_access_valid_for_days
 
-  def initialize(id:, **attrs)
-    @id = id
-    @name = attrs[:name]
-    @transaction_total_days = attrs[:transaction_total_days].to_i
-    @max_access_valid_for_days = attrs[:max_access_valid_for_days].to_i
-  end
-
   class << self
     def find_by_country(country)
       connection
@@ -24,5 +17,12 @@ class Bank::Institution
         .body
         .then { new(**it) }
     end
+  end
+
+  def initialize(id:, **attrs)
+    @id = id
+    @name = attrs[:name]
+    @transaction_total_days = attrs[:transaction_total_days].to_i
+    @max_access_valid_for_days = attrs[:max_access_valid_for_days].to_i
   end
 end

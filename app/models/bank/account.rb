@@ -3,6 +3,15 @@ class Bank::Account
 
   attr_reader :id, :iban, :institution_id
 
+  class << self
+    def find(id)
+      connection
+        .get("accounts/#{id}/")
+        .body
+        .then { new(**it) }
+    end
+  end
+
   def initialize(id:, **attrs)
     @id = id
     @iban = attrs[:iban]
@@ -30,15 +39,6 @@ class Bank::Account
       fetch_transactions(from:, to:)
     else
       @transactions ||= fetch_transactions(from:, to:)
-    end
-  end
-
-  class << self
-    def find(id)
-      connection
-        .get("accounts/#{id}/")
-        .body
-        .then { new(**it) }
     end
   end
 

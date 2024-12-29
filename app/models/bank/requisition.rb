@@ -3,26 +3,6 @@ class Bank::Requisition
 
   attr_reader :id, :link, :account_ids, :reference_id, :institution_id
 
-  def initialize(id:, **attrs)
-    @id = id
-    @link = attrs[:link]
-    @account_ids = attrs[:accounts]
-    @reference_id = attrs[:reference]
-    @institution_id = attrs[:institution_id]
-  end
-
-  def accounts
-    raise "Cannot fetch accounts without account_ids" unless @account_ids.present?
-
-    @accounts ||= @account_ids.map { Bank::Account.find it }
-  end
-
-  def delete
-    connection
-      .delete("requisitions/#{id}/")
-      .body
-  end
-
   class << self
     def all
       connection
@@ -55,17 +35,36 @@ class Bank::Requisition
     end
 
     private
+      def create_agreement(institution)
+        connection
+          .post("agreements/enduser/", {
+            institution_id: institution.id,
+            max_historical_days: institution.transaction_total_days,
+            access_valid_for_days: institution.max_access_valid_for_days,
+            access_scope: %w[balances details transactions]
+          })
+          .body
+          .fetch(:id)
+      end
+  end
 
-    def create_agreement(institution)
-      connection
-        .post("agreements/enduser/", {
-          institution_id: institution.id,
-          max_historical_days: institution.transaction_total_days,
-          access_valid_for_days: institution.max_access_valid_for_days,
-          access_scope: %w[balances details transactions]
-        })
-        .body
-        .fetch(:id)
-    end
+  def initialize(id:, **attrs)
+    @id = id
+    @link = attrs[:link]
+    @account_ids = attrs[:accounts]
+    @reference_id = attrs[:reference]
+    @institution_id = attrs[:institution_id]
+  end
+
+  def accounts
+    raise "Cannot fetch accounts without account_ids" unless @account_ids.present?
+
+    @accounts ||= @account_ids.map { Bank::Account.find it }
+  end
+
+  def delete
+    connection
+      .delete("requisitions/#{id}/")
+      .body
   end
 end
