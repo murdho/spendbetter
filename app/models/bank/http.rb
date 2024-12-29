@@ -19,7 +19,7 @@ module Bank::Http
       conn.response :json, parser_options: { decoder: [ Jason, :parse ] }
       conn.response :raise_error
 
-      conn.response(:logger, Rails.logger) { add_logging_filters it } if Rails.env.development?
+      conn.response(:logger, Rails.logger, headers: true, bodies: false) { add_logging_filters it } if Rails.env.local?
     end
   end
 

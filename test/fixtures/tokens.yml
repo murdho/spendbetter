@@ -2,21 +2,21 @@
 
 fresh:
   name: a fresh one
-  access_token: <%= SecureRandom.hex %>
-  refresh_token: <%= SecureRandom.hex %>
+  access_token: fresh_access_token
+  refresh_token: fresh_refresh_token
   access_expires_at: <%= Time.current + 1.hour %>
   refresh_expires_at: <%= Time.current + 1.day %>
 
 refreshable:
   name: a refreshable one
-  access_token: <%= SecureRandom.hex %>
-  refresh_token: <%= SecureRandom.hex %>
+  access_token: expired_access_token
+  refresh_token: fresh_refresh_token
   access_expires_at: <%= Time.current - 1.hour %>
   refresh_expires_at: <%= Time.current + 1.day %>
 
 expired:
   name: an expired one
-  access_token: <%= SecureRandom.hex %>
-  refresh_token: <%= SecureRandom.hex %>
+  access_token: expired_access_token
+  refresh_token: expired_refresh_token
   access_expires_at: <%= Time.current - 1.day %>
   refresh_expires_at: <%= Time.current - 1.hour %>

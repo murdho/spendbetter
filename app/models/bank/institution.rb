@@ -1,8 +1,6 @@
 class Bank::Institution
   include Bank::Connection
 
-  SANDBOX_INSTITUTION_ID = "SANDBOXFINANCE_SFIN0000"
-
   attr_reader :id, :name, :transaction_total_days, :max_access_valid_for_days
 
   def initialize(id:, **attrs)
@@ -28,7 +26,7 @@ class Bank::Institution
     end
 
     def sandbox
-      find SANDBOX_INSTITUTION_ID
+      find Bank::SANDBOX_INSTITUTION_ID
     end
   end
 end

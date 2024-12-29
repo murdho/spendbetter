@@ -1,7 +1,7 @@
 class Bank::Requisition
   include Bank::Connection
 
-  attr_reader :id, :link, :reference_id, :institution_id
+  attr_reader :id, :link, :account_ids, :reference_id, :institution_id
 
   def initialize(id:, **attrs)
     @id = id
@@ -39,17 +39,8 @@ class Bank::Requisition
         .then { new(**it) }
     end
 
-    def create(institution,
-               reference_id: SecureRandom.uuid,
-               redirect_url: "http://localhost:3000")
-      connection
-        .post("agreements/enduser/", {
-          institution_id: institution.id,
-          max_historical_days: institution.transaction_total_days,
-          access_valid_for_days: institution.max_access_valid_for_days,
-          access_scope: %w[balances details transactions]
-        })
-        .body => { id: agreement_id }
+    def create(institution, reference_id: SecureRandom.uuid, redirect_url: "http://localhost:3000")
+      agreement_id = create_agreement(institution)
 
       connection
         .post("requisitions/", {
@@ -61,6 +52,20 @@ class Bank::Requisition
         })
         .body
         .then { new(**it) }
+    end
+
+    private
+
+    def create_agreement(institution)
+      connection
+        .post("agreements/enduser/", {
+          institution_id: institution.id,
+          max_historical_days: institution.transaction_total_days,
+          access_valid_for_days: institution.max_access_valid_for_days,
+          access_scope: %w[balances details transactions]
+        })
+        .body
+        .fetch(:id)
     end
   end
 end
