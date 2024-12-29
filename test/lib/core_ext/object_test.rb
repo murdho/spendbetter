@@ -1,6 +1,6 @@
 require "test_helper"
 
-class CoreExt::ObjectTest < ActiveSupport::TestCase
+class ObjectTest < ActiveSupport::TestCase
   setup do
     @obj = Object.new
   end
