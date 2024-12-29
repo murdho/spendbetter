@@ -57,8 +57,7 @@ class Bank::Requisition
   end
 
   def accounts
-    raise "Cannot fetch accounts without account_ids" unless @account_ids.present?
-
+    assert @account_ids, "Cannot fetch accounts, @account_ids missing: #{self.inspect}"
     @accounts ||= @account_ids.map { Bank::Account.find it }
   end
 
