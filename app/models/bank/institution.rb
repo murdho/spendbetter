@@ -24,9 +24,5 @@ class Bank::Institution
         .body
         .then { new(**it) }
     end
-
-    def sandbox
-      find Bank::SANDBOX_INSTITUTION_ID
-    end
   end
 end

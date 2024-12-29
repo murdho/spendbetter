@@ -19,15 +19,15 @@ module Bank
   end
 
   def institutions(country:)
-    Bank::Institution.find_by_country(country)
+    Bank::Institution.find_by_country country
   end
 
   def institution(id)
-    Bank::Institution.find(id)
+    Bank::Institution.find id
   end
 
   def sandbox_institution
-    Bank::Institution.sandbox
+    Bank::Institution.find SANDBOX_INSTITUTION_ID
   end
 
   def requisitions
@@ -39,6 +39,6 @@ module Bank
   end
 
   def account(id)
-    Bank::Account.find(id)
+    Bank::Account.find id
   end
 end
