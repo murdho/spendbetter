@@ -64,6 +64,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webmock", require: false
+  gem "simplecov", require: false
 end
 
 gem "faraday", "~> 2.12"
