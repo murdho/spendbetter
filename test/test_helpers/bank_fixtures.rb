@@ -14,13 +14,23 @@ module BankFixtures
 
   SANDBOX_INSTITUTION_ID = Bank::SANDBOX_INSTITUTION_ID
 
+  SANDBOX_AGREEMENT = {
+    id: "d915bfed-bbff-43c9-bf5a-4d62bdadbe29",
+    created: "2024-12-29T15:22:12.231989Z",
+    institution_id: "SANDBOXFINANCE_SFIN0000",
+    max_historical_days: 90,
+    access_valid_for_days: 180,
+    access_scope: [ "balances", "details", "transactions" ],
+    accepted: nil
+  }
+
   SANDBOX_REQUISITION = {
     id: "780bcb92-c6cb-4cd8-9974-e0374177f7cd",
     created: "2024-12-27T21:34:20.658531Z",
     redirect: "http://localhost:3000",
     status: "LN",
     institution_id: "SANDBOXFINANCE_SFIN0000",
-    agreement: "bdaade38-3b03-4857-9ed9-4a33ce20da45",
+    agreement: "d915bfed-bbff-43c9-bf5a-4d62bdadbe29",
     reference: "be233689-b8b9-4c24-8b1f-9c4a7d522ea3",
     accounts: [ "68d5b037-0706-41b7-ad63-5e62df8684d9", "9daf5886-2d46-464b-9f2b-65accac9295e" ],
     user_language: "EN",

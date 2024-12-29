@@ -8,6 +8,22 @@ class BankTest < ActiveSupport::TestCase
     stub_token_requests
   end
 
+  test "connect" do
+    stub_create_agreement_request institution: SANDBOX_INSTITUTION
+    stub_create_requisition_request institution: SANDBOX_INSTITUTION, agreement: SANDBOX_AGREEMENT
+
+    requisition = Bank.connect Bank::Institution.new(**SANDBOX_INSTITUTION)
+    assert_equal "780bcb92-c6cb-4cd8-9974-e0374177f7cd", requisition.id
+    assert_equal "SANDBOXFINANCE_SFIN0000", requisition.institution_id
+  end
+
+  test "disconnect" do
+    stub_delete_requisition_request SANDBOX_REQUISITION
+
+    Bank.disconnect Bank::Requisition.new(**SANDBOX_REQUISITION)
+    assert_requested :delete, /requisitions\/780bcb92-c6cb-4cd8-9974-e0374177f7cd/
+  end
+
   test "countries" do
     assert_equal 30, Bank.countries.count
     assert_equal Bank::COUNTRIES, Bank.countries

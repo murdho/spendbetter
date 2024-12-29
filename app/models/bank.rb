@@ -14,6 +14,14 @@ module Bank
   #   .then { puts "%w[#{it}]"}
   COUNTRIES = %w[AT BE BG CY CZ DE DK EE ES FI FR GB GR HR HU IE IS IT LT LU LV MT NL NO PL PT RO SE SI SK]
 
+  def connect(institution, **opts)
+    Bank::Requisition.create institution, **opts
+  end
+
+  def disconnect(requisition)
+    requisition.delete
+  end
+
   def countries
     COUNTRIES
   end

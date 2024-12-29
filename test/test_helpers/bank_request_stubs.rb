@@ -64,6 +64,41 @@ module BankRequestStubs
       )
   end
 
+  def stub_create_agreement_request(institution:)
+    stub_request(:post, "#{Bank::Http::URL}agreements/enduser/")
+      .with(
+        body: {
+          institution_id: institution.fetch(:id),
+          max_historical_days: institution.fetch(:transaction_total_days).to_i,
+          access_valid_for_days: institution.fetch(:max_access_valid_for_days).to_i,
+          access_scope: %w[balances details transactions]
+        }
+      )
+      .to_return(
+        status: 200,
+        headers: DEFAULT_RESPONSE_HEADERS,
+        body: SANDBOX_AGREEMENT.to_json
+      )
+  end
+
+  def stub_create_requisition_request(institution:, agreement:)
+    stub_request(:post, "#{Bank::Http::URL}requisitions/")
+      .with(
+        body: {
+          institution_id: institution.fetch(:id),
+          agreement: agreement.fetch(:id),
+          reference: /^\h{8}-(\h{4}-){3}\h{12}$/, # Any UUID
+          redirect: "http://localhost:3000", # Placeholder value for now
+          user_language: "EN"
+        }
+      )
+      .to_return(
+        status: 200,
+        headers: DEFAULT_RESPONSE_HEADERS,
+        body: SANDBOX_REQUISITION.to_json
+      )
+  end
+
   def stub_requisitions_request
     stub_request(:get, "#{Bank::Http::URL}requisitions/")
       .to_return(
@@ -89,6 +124,18 @@ module BankRequestStubs
         status: 200,
         headers: DEFAULT_RESPONSE_HEADERS,
         body: requisition.to_json
+      )
+  end
+
+  def stub_delete_requisition_request(requisition)
+    stub_request(:delete, "#{Bank::Http::URL}requisitions/#{requisition.fetch(:id)}/")
+      .to_return(
+        status: 200,
+        headers: DEFAULT_RESPONSE_HEADERS,
+        body: {
+          summary: "Requisition deleted",
+          detail: "Requisition #{requisition.fetch(:id)} deleted with all its End User Agreements"
+        }.to_json
       )
   end
 
