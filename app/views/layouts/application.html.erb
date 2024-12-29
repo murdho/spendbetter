@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= ["spendbetter", content_for(:title)].compact.join(" – ") %></title>
+    <title><%= content_for(:title) || "Spendbetter" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -16,7 +16,6 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -24,17 +23,6 @@
   </head>
 
   <body>
-    <header>
-      <nav>
-        <%= link_to "Home", root_path %>
-        <%= link_to "Folders", folders_path %>
-        <%= link_to "Entries", entries_path %>
-      </nav>
-      <h1>spendbetter</h1>
-    </header>
-
-    <main>
-      <%= yield %>
-    </main>
+    <%= yield %>
   </body>
 </html>
