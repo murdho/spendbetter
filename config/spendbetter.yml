@@ -1,0 +1,15 @@
+default: &default
+  gocardless:
+    secret_id: <%= ENV.fetch("GOCARDLESS_SECRET_ID") %>
+    secret_key: <%= ENV.fetch("GOCARDLESS_SECRET_KEY") %>
+
+development:
+  <<: *default
+
+test:
+  gocardless:
+    secret_id: fake_secret_id
+    secret_key: fake_secret_key
+
+production:
+  <<: *default

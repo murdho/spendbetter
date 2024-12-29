@@ -23,5 +23,7 @@ module Spendbetter
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.spendbetter = config_for(:spendbetter)
   end
 end

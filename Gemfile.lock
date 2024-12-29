@@ -395,6 +395,7 @@ DEPENDENCIES
   capybara
   csv
   debug
+  dotenv
   faraday (~> 2.12)
   importmap-rails
   jbuilder

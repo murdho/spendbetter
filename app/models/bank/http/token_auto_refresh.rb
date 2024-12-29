@@ -45,8 +45,8 @@ class Bank::Http::TokenAutoRefresh < Faraday::Middleware
       save_token \
         http_client
           .post("token/new/", {
-            secret_id: Rails.application.credentials.gocardless.secret_id,
-            secret_key: Rails.application.credentials.gocardless.secret_key
+            secret_id: Rails.configuration.spendbetter.gocardless.fetch(:secret_id),
+            secret_key: Rails.configuration.spendbetter.gocardless.fetch(:secret_key)
           })
           .body
     end
