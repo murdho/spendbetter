@@ -1,0 +1,13 @@
+default: &default
+  gocardless:
+    secret_id: <%= ENV["GOCARDLESS_SECRET_ID"] %>
+    secret_key: <%= ENV["GOCARDLESS_SECRET_KEY"] %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

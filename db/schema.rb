@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2024_12_26_080651) do
+ActiveRecord::Schema[8.1].define(version: 2024_12_26_170308) do
   create_table "entries", force: :cascade do |t|
     t.date "date"
     t.decimal "amount", null: false
@@ -28,6 +28,17 @@ ActiveRecord::Schema[8.1].define(version: 2024_12_26_080651) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tokens", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "access_token", null: false
+    t.string "refresh_token", null: false
+    t.datetime "access_expires_at", null: false
+    t.datetime "refresh_expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tokens_on_name", unique: true
   end
 
   add_foreign_key "entries", "folders"
