@@ -8,7 +8,7 @@ class Bank::Account
       connection
         .get("accounts/#{id}/")
         .body
-        .then { new(**it) }
+        .then { new **it }
     end
   end
 

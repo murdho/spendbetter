@@ -12,7 +12,7 @@ class BankTest < ActiveSupport::TestCase
     stub_create_agreement_request institution: SANDBOX_INSTITUTION
     stub_create_requisition_request institution: SANDBOX_INSTITUTION, agreement: SANDBOX_AGREEMENT
 
-    requisition = Bank.connect Bank::Institution.new(**SANDBOX_INSTITUTION)
+    requisition = Bank.connect Bank::Institution.new **SANDBOX_INSTITUTION
     assert_equal "780bcb92-c6cb-4cd8-9974-e0374177f7cd", requisition.id
     assert_equal "SANDBOXFINANCE_SFIN0000", requisition.institution_id
   end
@@ -20,7 +20,7 @@ class BankTest < ActiveSupport::TestCase
   test "disconnect" do
     stub_delete_requisition_request SANDBOX_REQUISITION
 
-    Bank.disconnect Bank::Requisition.new(**SANDBOX_REQUISITION)
+    Bank.disconnect Bank::Requisition.new **SANDBOX_REQUISITION
     assert_requested :delete, /requisitions\/780bcb92-c6cb-4cd8-9974-e0374177f7cd/
   end
 

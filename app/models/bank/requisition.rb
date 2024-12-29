@@ -9,14 +9,14 @@ class Bank::Requisition
         .get("requisitions/")
         .body
         .fetch(:results)
-        .map { new(**it) }
+        .map { new **it }
     end
 
     def find(id)
       connection
         .get("requisitions/#{id}/")
         .body
-        .then { new(**it) }
+        .then { new **it }
     end
 
     def create(institution, reference_id: SecureRandom.uuid, redirect_url: "http://localhost:3000")
@@ -31,7 +31,7 @@ class Bank::Requisition
           user_language: "EN"
         })
         .body
-        .then { new(**it) }
+        .then { new **it }
     end
 
     private

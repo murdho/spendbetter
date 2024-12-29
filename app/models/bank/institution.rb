@@ -8,14 +8,14 @@ class Bank::Institution
       connection
         .get("institutions/", { country: })
         .body
-        .map { new(**it) }
+        .map { new **it }
     end
 
     def find(id)
       connection
         .get("institutions/#{id}/")
         .body
-        .then { new(**it) }
+        .then { new **it }
     end
   end
 
