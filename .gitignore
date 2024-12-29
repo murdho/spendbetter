@@ -9,6 +9,8 @@
 
 # Ignore all environment files.
 /.env*
+!/.env.example.erb
+!/.env.test
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -30,5 +32,9 @@
 
 /public/assets
 
-# Ignore master key for decrypting credentials and more.
+# Ignore all default key files (if there happen to be any).
 /config/master.key
+/config/credentials/*.key
+
+# Ignore test coverage reports
+/coverage
