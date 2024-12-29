@@ -100,4 +100,32 @@ module BankRequestStubs
         body: account.to_json
       )
   end
+
+  def stub_account_balances_request(account, balances)
+    stub_request(:get, "#{Bank::Http::URL}accounts/#{account.fetch(:id)}/balances/")
+      .to_return(
+        status: 200,
+        headers: DEFAULT_RESPONSE_HEADERS,
+        body: { balances: }.to_json
+      )
+  end
+
+  def stub_account_details_request(account, details)
+    stub_request(:get, "#{Bank::Http::URL}accounts/#{account.fetch(:id)}/details/")
+      .to_return(
+        status: 200,
+        headers: DEFAULT_RESPONSE_HEADERS,
+        body: { account: details }.to_json
+      )
+  end
+
+  def stub_account_transactions_request(account, transactions, from: nil, to: nil)
+    stub_request(:get, "#{Bank::Http::URL}accounts/#{account.fetch(:id)}/transactions/")
+      .with(query: { date_from: from, date_to: to }.compact)
+      .to_return(
+        status: 200,
+        headers: DEFAULT_RESPONSE_HEADERS,
+        body: { transactions: { booked: transactions } }.to_json
+      )
+  end
 end

@@ -45,6 +45,55 @@ module BankFixtures
 
   SANDBOX_ACCOUNT_ONE_ID = SANDBOX_ACCOUNT_ONE.fetch(:id)
 
+  SANDBOX_ACCOUNT_ONE_BALANCES = [
+    {
+      balance_amount: { amount: "1913.12", currency: "EUR" },
+      balance_type: "expected", reference_date: "2024-12-29"
+    },
+    {
+      balance_amount: { amount: "1913.12", currency: "EUR" },
+      balance_type: "interimAvailable", reference_date: "2024-12-29"
+    }
+  ]
+
+  SANDBOX_ACCOUNT_ONE_DETAILS = {
+    resource_id: "01F3NS4YV94RA29YCH8R0F6BMF",
+    iban: "GL3510230000010234",
+    currency: "EUR",
+    owner_name: "John Doe",
+    name: "Main Account",
+    product: "Checkings",
+    cash_account_type: "CACC"
+  }
+
+  SANDBOX_ACCOUNT_ONE_TRANSACTIONS = [
+    {
+      transaction_id: "2024122801773517-1",
+      entry_reference: "2024122801773517-1",
+      booking_date: "2024-12-28",
+      value_date: "2024-12-28",
+      transaction_amount: { amount: "-95.35", currency: "EUR" },
+      creditor_name: "Freshto Ideal",
+      remittance_information_unstructured: "Freshto Ideal Clerkenwell",
+      bank_transaction_code: "PMNT",
+      proprietary_bank_transaction_code: "PURCHASE",
+      internal_transaction_id: "fe956029a01f42f53e6ddec7058780f8"
+    },
+    {
+      transaction_id: "2024122801773516-1",
+      entry_reference: "2024122801773516-1",
+      booking_date: "2024-12-27",
+      value_date: "2024-12-27",
+      transaction_amount: { amount: "15.00", currency: "EUR" },
+      debtor_name: "Jennifer Houston",
+      debtor_account: { iban: "IE96BOFI900017816198" },
+      remittance_information_unstructured: "Cab sharing, thank you!",
+      bank_transaction_code: "PMNT",
+      proprietary_bank_transaction_code: "TRANSFER",
+      internal_transaction_id: "7e369a9f8826501041598e5bd05aca38"
+    }
+  ]
+
   SANDBOX_ACCOUNT_TWO = {
     id: "9daf5886-2d46-464b-9f2b-65accac9295e",
     created: "2024-12-27T21:34:42.396133Z",
