@@ -1,3 +1,15 @@
+# Faraday middleware for automatically refreshing and storing both access and refresh tokens.
+#
+# ==== Options
+#
+# [<tt>token_name</tt>]
+#   Specify name of the Token model record for finding and storing the API tokens.
+#
+# ==== Example
+#
+#   Faraday.new do |conn|
+#     conn.use TokenAutoRefresh, token_name: :bla_bla
+#   end
 class Bank::Http::TokenAutoRefresh < Faraday::Middleware
   attr_reader :token
 

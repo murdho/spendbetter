@@ -1,4 +1,6 @@
-class Bank::Http::JsonDecoder
+# JSON parser for converting all hash keys into underscore symbols. For example, +"transactionAmount"+ is transformed
+# into +:transaction_amount+.
+class Bank::Http::Jason
   class << self
     def parse(str, opts)
       JSON
