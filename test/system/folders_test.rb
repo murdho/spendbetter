@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class FoldersTest < ApplicationSystemTestCase
   setup do
-    @folder = folders(:one)
+    @folder = folders(:main)
   end
 
   test "visiting the index" do
