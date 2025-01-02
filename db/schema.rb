@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2024_12_26_170308) do
+ActiveRecord::Schema[8.1].define(version: 2025_01_02_080653) do
   create_table "entries", force: :cascade do |t|
     t.date "date"
     t.decimal "amount", null: false
@@ -26,6 +26,13 @@ ActiveRecord::Schema[8.1].define(version: 2024_12_26_170308) do
 
   create_table "folders", force: :cascade do |t|
     t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "perspectives", force: :cascade do |t|
+    t.string "name"
+    t.text "query", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

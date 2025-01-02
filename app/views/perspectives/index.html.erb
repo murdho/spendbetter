@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Perspectives" %>
+
+<h1>Perspectives</h1>
+
+<div id="perspectives">
+  <% @perspectives.each do |perspective| %>
+    <%= render perspective %>
+    <p>
+      <%= link_to "Show this perspective", perspective %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New perspective", new_perspective_path %>

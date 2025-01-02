@@ -1,0 +1,12 @@
+<% content_for :title, "Editing perspective" %>
+
+<h1>Editing perspective</h1>
+
+<%= render "form", perspective: @perspective %>
+
+<br>
+
+<div>
+  <%= link_to "Show this perspective", @perspective %> |
+  <%= link_to "Back to perspectives", perspectives_path %>
+</div>
