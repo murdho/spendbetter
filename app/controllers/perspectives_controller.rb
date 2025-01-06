@@ -3,7 +3,9 @@ class PerspectivesController < ApplicationController
 
   # GET /perspectives or /perspectives.json
   def index
-    @perspectives = Perspective.all
+    # @perspectives = Perspective.all
+    @saved_perspectives = Perspective.saved.order(:name)
+    @recent_perspectives = Perspective.recent.order(updated_at: :desc)
   end
 
   # GET /perspectives/1 or /perspectives/1.json
@@ -31,7 +33,7 @@ class PerspectivesController < ApplicationController
 
     respond_to do |format|
       if @perspective.save
-        format.html { redirect_to @perspective, notice: "Perspective was successfully created." }
+        format.html { redirect_to @perspective }
         format.json { render :show, status: :created, location: @perspective }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +46,7 @@ class PerspectivesController < ApplicationController
   def update
     respond_to do |format|
       if @perspective.update(perspective_params)
-        format.html { redirect_to @perspective, notice: "Perspective was successfully updated." }
+        format.html { redirect_to @perspective }
         format.json { render :show, status: :ok, location: @perspective }
       else
         format.html { render :edit, status: :unprocessable_entity }

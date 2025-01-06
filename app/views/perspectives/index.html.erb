@@ -4,8 +4,21 @@
 
 <h1>Perspectives</h1>
 
-<div id="perspectives">
-  <% @perspectives.each do |perspective| %>
+<h2>Saved</h2>
+
+<div id="saved_perspectives">
+  <% @saved_perspectives.each do |perspective| %>
+    <%= render perspective %>
+    <p>
+      <%= link_to "Show this perspective", perspective %>
+    </p>
+  <% end %>
+</div>
+
+<h2>Recent</h2>
+
+<div id="recent_perspectives">
+  <% @recent_perspectives.each do |perspective| %>
     <%= render perspective %>
     <p>
       <%= link_to "Show this perspective", perspective %>

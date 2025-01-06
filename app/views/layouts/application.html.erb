@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-controller="bla">
   <head>
     <title><%= ["spendbetter", content_for(:title)].compact.join(" – ") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -27,6 +27,7 @@
     <header>
       <nav>
         <%= link_to "Home", root_path %>
+        <%= link_to "Perspectives", perspectives_path %>
         <%= link_to "Folders", folders_path %>
         <%= link_to "Entries", entries_path %>
       </nav>

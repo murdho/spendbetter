@@ -1,29 +1,31 @@
-<div id="results">
-  <% if @results.any? %>
-    <table>
-      <thead>
-      <tr>
-        <% @results[0].keys.each do |column| %>
-          <th><%= column %></th>
-        <% end %>
-      </tr>
-      </thead>
-      <tbody>
-      <% @results.each do |row| %>
-        <tr>
-          <% row.values.each do |value| %>
-            <td><%= value %></td>
-          <% end %>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <p>No results</p>
-  <% end %>
+<div id="perspective-results">
+  <div data-perspective--results-target="results">
+    <%# if @results.any? %>
+<!--      <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+          <%# @results[0].keys.each do |column| %>
+<!--            <th><%#= column %></th>-->
+          <%# end %>
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+        <%# @results.each do |row| %>
+<!--          <tr>-->
+            <%# row.values.each do |value| %>
+<!--              <td><%#= value %></td>-->
+            <%# end %>
+<!--          </tr>-->
+        <%# end %>
+<!--        </tbody>-->
+<!--      </table>-->
+    <%# else %>
+<!--      <p>No results</p>-->
+    <%# end %>
+  </div>
 
-  <details>
-    <summary>Raw results</summary>
-    <pre><%= JSON.pretty_generate @results %></pre>
-  </details>
+<!--  <details>-->
+<!--    <summary>Raw results</summary>-->
+<!--    <pre><%#= JSON.pretty_generate @results %></pre>-->
+<!--  </details>-->
 </div>

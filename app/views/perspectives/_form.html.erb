@@ -12,16 +12,16 @@
   <% end %>
 
   <div>
-    <%= form.label :query, style: "display: block" %>
-    <%= form.textarea :query %>
+    <%#= form.label :query, style: "display: block" %>
+    <%= form.textarea :query, rows: 5, placeholder: "Query", data: { perspective__results_target: "query" } %>
   </div>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%#= form.label :name, style: "display: block" %>
+    <%= form.text_field :name, placeholder: "Name" %>
+    <%= form.submit "Run" %>
   </div>
 
   <div>
-    <%= form.submit %>
   </div>
 <% end %>

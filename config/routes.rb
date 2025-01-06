@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :perspectives
   resources :folders
   resources :entries
+  resources :databases, only: [ :show ]
 
   # Defines the root path route ("/")
   root "perspectives#new"

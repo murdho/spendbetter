@@ -1,12 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<!--<p style="color: green"><%#= notice %></p>-->
 
-<%= render @perspective %>
+<div data-controller="perspective--results">
+<%#= render @perspective %>
+  <%= render "form", perspective: @perspective %>
 
-<div>
-  <%= link_to "Edit this perspective", edit_perspective_path(@perspective) %>
-  <%#= link_to "Back to perspectives", perspectives_path %>
+  <div>
+    <%#= link_to "Edit this perspective", edit_perspective_path(@perspective) %>
+    <%#= link_to "Back to perspectives", perspectives_path %>
 
-  <%#= button_to "Destroy this perspective", @perspective, method: :delete %>
+    <%#= button_to "Destroy this perspective", @perspective, method: :delete %>
+  </div>
+
+  <%= render "results" %>
 </div>
-
-<%= render "results" %>
