@@ -4,7 +4,7 @@ module Bank::Http
   URL = "https://bankaccountdata.gocardless.com/api/v2/"
   USER_AGENT = "github.com/murdho/spendbetter"
 
-  # Create an HTTP client suitable for communicating with the bank API.
+  # Create an HTTP client for communicating with the bank API.
   #
   # [<tt>authorized_by</tt>]
   #   Name for a Token for finding and storing API tokens. Optional.
