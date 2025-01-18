@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @perspective %>
+
+<div>
+  <%= link_to "Edit this perspective", edit_perspective_path(@perspective) %> |
+  <%= link_to "Back to perspectives", perspectives_path %>
+
+  <%= button_to "Destroy this perspective", @perspective, method: :delete %>
+</div>

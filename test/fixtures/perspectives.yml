@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+latest_entries:
+  name: Latest entries
+  query: select * from entries order by date desc limit 25
+  pinned: false
+
+incomes:
+  name: Incomes
+  query: select * from entries where amount > 0 order by date desc
+  pinned: true

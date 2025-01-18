@@ -68,3 +68,5 @@ group :test do
 end
 
 gem "faraday", "~> 2.12"
+
+gem "duckdb", "~> 1.1"
