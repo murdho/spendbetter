@@ -34,7 +34,10 @@ class FoldersTest < ApplicationSystemTestCase
 
   test "should destroy Folder" do
     visit folder_url(@folder)
-    click_on "Destroy this folder", match: :first
+
+    accept_confirm do
+      click_on "Destroy this folder", match: :first
+    end
 
     assert_text "Folder was successfully destroyed"
   end

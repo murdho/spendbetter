@@ -38,7 +38,10 @@ class PerspectivesTest < ApplicationSystemTestCase
 
   test "should destroy Perspective" do
     visit perspective_url(@perspective)
-    click_on "Destroy this perspective", match: :first
+
+    accept_confirm do
+      click_on "Destroy this perspective", match: :first
+    end
 
     assert_text "Perspective was successfully destroyed"
   end

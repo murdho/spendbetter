@@ -46,7 +46,10 @@ class EntriesTest < ApplicationSystemTestCase
 
   test "should destroy Entry" do
     visit entry_url(@entry)
-    click_on "Destroy this entry", match: :first
+
+    accept_confirm do
+      click_on "Destroy this entry", match: :first
+    end
 
     assert_text "Entry was successfully destroyed"
   end
