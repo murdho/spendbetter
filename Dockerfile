@@ -8,8 +8,10 @@
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.6
+ARG RUBY_VERSION=3.4.1
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+
+ARG DUCKDB_VERSION=1.1.3
 
 # Rails app lives here
 WORKDIR /rails
@@ -30,8 +32,15 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git pkg-config && \
+    apt-get install --no-install-recommends -y build-essential git pkg-config wget unzip && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Install DuckDB (C/C++) according to instructions: https://github.com/suketa/ruby-duckdb#pre-requisite-setup-linux
+RUN wget https://github.com/duckdb/duckdb/releases/download/v${DUCKDB_VERSION}/libduckdb-linux-aarch64.zip && \
+    unzip libduckdb-linux-aarch64.zip -d libduckdb &&  \
+    mv libduckdb/duckdb.* /usr/local/include/ && \
+    mv libduckdb/libduckdb.so /usr/local/lib/ && \
+    ldconfig /usr/local/lib
 
 # Install application gems
 COPY Gemfile Gemfile.lock vendor ./
@@ -58,6 +67,8 @@ FROM base
 # Copy built artifacts: gems, application
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
+COPY --from=build /usr/local/include/duckdb.* /usr/local/include
+COPY --from=build /usr/local/lib/libduckdb.so /usr/local/lib/libduckdb.so
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
