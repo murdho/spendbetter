@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class PerspectivesTest < ApplicationSystemTestCase
   setup do
-    @perspective = perspectives(:one)
+    @perspective = perspectives(:latest_entries)
   end
 
   test "visiting the index" do
