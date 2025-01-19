@@ -66,6 +66,15 @@ jobs:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git pkg-config google-chrome-stable
 
+      # Instructions: https://github.com/suketa/ruby-duckdb#pre-requisite-setup-linux
+      - name: Install DuckDB (C/C++)
+        run: |
+          wget https://github.com/duckdb/duckdb/releases/download/v1.1.3/libduckdb-linux-amd64.zip
+          unzip libduckdb-linux-amd64.zip -d libduckdb
+          sudo mv libduckdb/duckdb.* /usr/local/include/
+          sudo mv libduckdb/libduckdb.so /usr/local/lib
+          sudo ldconfig --verbose /usr/local/lib
+
       - name: Checkout code
         uses: actions/checkout@v4
 
