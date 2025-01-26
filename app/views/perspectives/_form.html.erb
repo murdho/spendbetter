@@ -12,21 +12,17 @@
   <% end %>
 
   <div>
-    <%= form.label :query, style: "display: block" %>
-    <%= form.textarea :query %>
+    <%= form.textarea :query, required: true, placeholder: "Query", "aria-label": "Query", rows: 4 %>
   </div>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div style="display: flex; justify-content: flex-end; gap: 10px">
+    <%= form.text_field :name, required: true, placeholder: "Name", "aria-label": "Name", style: "flex: 1" %>
+    <%= form.submit "Save & Run" %>
   </div>
+<% end %>
 
-  <div>
-    <%= form.label :pinned, style: "display: block" %>
-    <%= form.checkbox :pinned %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+<% if perspective.persisted? %>
+  <%= form_with model: perspective, method: :delete do |f| %>
+    <%= f.submit "Delete", data: { turbo_confirm: "Are you sure?" } %>
+  <% end %>
 <% end %>

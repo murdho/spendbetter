@@ -1,16 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Perspectives" %>
-
-<h1>Perspectives</h1>
-
 <div id="perspectives">
   <% @perspectives.each do |perspective| %>
-    <%= render perspective %>
-    <p>
-      <%= link_to "Show this perspective", perspective %>
-    </p>
+    <%= link_to perspective.name, perspectives_path(perspective:) %> |
   <% end %>
+
+  <%= link_to "New", perspectives_path(perspective: nil) %>
 </div>
 
-<%= link_to "New perspective", new_perspective_path %>
+<div id="perspective" style="margin-top: 1rem">
+  <%= render "form", perspective: @perspective %>
+</div>
+
+<div id="perspectives-results" style="margin-top: 1rem">
+  <%= render "results", perspective: @perspective %>
+</div>

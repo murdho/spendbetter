@@ -7,42 +7,40 @@ class PerspectivesTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit perspectives_url
-    assert_selector "h1", text: "Perspectives"
+    assert_selector "h1", text: "spendbetter"
   end
 
   test "should create perspective" do
     visit perspectives_url
-    click_on "New perspective"
 
-    fill_in "Name", with: @perspective.name
-    check "Pinned" if @perspective.pinned
+    name = SecureRandom.uuid
+    fill_in "Name", with: name
     fill_in "Query", with: @perspective.query
-    click_on "Create Perspective"
+    click_on "Save & Run"
 
-    assert_text "Perspective was successfully created"
-    click_on "Back"
+    assert_text name
   end
 
   test "should update Perspective" do
-    visit perspective_url(@perspective)
-    click_on "Edit this perspective", match: :first
+    visit perspectives_url
+    click_on @perspective.name, match: :first
 
-    fill_in "Name", with: @perspective.name
-    check "Pinned" if @perspective.pinned
+    name = SecureRandom.uuid
+    fill_in "Name", with: name
     fill_in "Query", with: @perspective.query
-    click_on "Update Perspective"
+    click_on "Save & Run"
 
-    assert_text "Perspective was successfully updated"
-    click_on "Back"
+    assert_text name
   end
 
   test "should destroy Perspective" do
-    visit perspective_url(@perspective)
+    visit perspectives_url
+    click_on @perspective.name, match: :first
 
     accept_confirm do
-      click_on "Destroy this perspective", match: :first
+      click_on "Delete", match: :first
     end
 
-    assert_text "Perspective was successfully destroyed"
+    assert_no_text @perspective.name
   end
 end

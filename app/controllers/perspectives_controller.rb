@@ -1,22 +1,10 @@
 class PerspectivesController < ApplicationController
-  before_action :set_perspective, only: %i[ show edit update destroy ]
+  before_action :set_perspective, only: %i[ update destroy ]
 
   # GET /perspectives or /perspectives.json
   def index
     @perspectives = Perspective.all
-  end
-
-  # GET /perspectives/1 or /perspectives/1.json
-  def show
-  end
-
-  # GET /perspectives/new
-  def new
-    @perspective = Perspective.new
-  end
-
-  # GET /perspectives/1/edit
-  def edit
+    @perspective = Perspective.find_or_initialize_by id: params[:perspective]
   end
 
   # POST /perspectives or /perspectives.json
@@ -25,7 +13,7 @@ class PerspectivesController < ApplicationController
 
     respond_to do |format|
       if @perspective.save
-        format.html { redirect_to @perspective, notice: "Perspective was successfully created." }
+        format.html { redirect_to perspectives_path(perspective: @perspective) }
         format.json { render :show, status: :created, location: @perspective }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,11 +26,13 @@ class PerspectivesController < ApplicationController
   def update
     respond_to do |format|
       if @perspective.update(perspective_params)
-        format.html { redirect_to @perspective, notice: "Perspective was successfully updated." }
+        format.html { redirect_to perspectives_path(perspective: @perspective) }
         format.json { render :show, status: :ok, location: @perspective }
+        # format.turbo_stream
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @perspective.errors, status: :unprocessable_entity }
+        # format.turbo_stream
       end
     end
   end
@@ -52,7 +42,7 @@ class PerspectivesController < ApplicationController
     @perspective.destroy!
 
     respond_to do |format|
-      format.html { redirect_to perspectives_path, status: :see_other, notice: "Perspective was successfully destroyed." }
+      format.html { redirect_to perspectives_path, status: :see_other }
       format.json { head :no_content }
     end
   end
