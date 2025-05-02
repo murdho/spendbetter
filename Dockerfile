@@ -11,7 +11,7 @@
 ARG RUBY_VERSION=3.4.3
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
-ARG DUCKDB_VERSION=1.1.3
+ARG DUCKDB_VERSION=1.2.2
 
 # Rails app lives here
 WORKDIR /rails
