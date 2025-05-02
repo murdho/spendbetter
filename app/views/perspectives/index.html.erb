@@ -8,10 +8,12 @@
   <%= link_to "New", perspectives_path(perspective: nil) %>
 </div>
 
-<div id="perspective" style="margin-top: 1rem">
-  <%= render "form", perspective: @perspective %>
-</div>
+<div data-controller="perspective--results">
+  <div id="perspective" style="margin-top: 1rem">
+    <%= render "form", perspective: @perspective %>
+  </div>
 
-<div id="perspectives-results" style="margin-top: 1rem">
-  <%= render "results", perspective: @perspective %>
+  <div id="perspective-results" style="margin-top: 1rem">
+    <%= render "results", perspective: @perspective %>
+  </div>
 </div>
