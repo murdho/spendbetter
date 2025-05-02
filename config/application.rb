@@ -29,5 +29,7 @@ module Spendbetter
     config.active_record.encryption.key_derivation_salt = ENV["ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT"]
 
     config.spendbetter = config_for(:spendbetter)
+
+    routes.default_url_options = { host: config.spendbetter.host }
   end
 end

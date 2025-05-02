@@ -3,6 +3,8 @@ default: &default
     secret_id: <%= ENV["GOCARDLESS_SECRET_ID"] %>
     secret_key: <%= ENV["GOCARDLESS_SECRET_KEY"] %>
 
+  host: <%= ENV["HOST"] %>
+
 development:
   <<: *default
 
