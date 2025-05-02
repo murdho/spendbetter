@@ -32,7 +32,7 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git pkg-config wget unzip && \
+    apt-get install --no-install-recommends -y build-essential git pkg-config wget unzip libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install DuckDB (C/C++) according to instructions: https://github.com/suketa/ruby-duckdb#pre-requisite-setup-linux
