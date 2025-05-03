@@ -53,13 +53,14 @@ class Bank::Http::TokenAutoRefresh < Faraday::Middleware
     end
 
     def save_token(new_tokens)
-      new_tokens => { access:, refresh:, access_expires:, refresh_expires: }
+      new_tokens.values_at(:access, :refresh, :access_expires, :refresh_expires) \
+        => access, refresh, access_expires, refresh_expires
 
-      token.update! \
-        access_token: access,
-        refresh_token: refresh,
-        access_expires_in: access_expires,
-        refresh_expires_in: refresh_expires
+      token.access_token = access if access
+      token.refresh_token = refresh if refresh
+      token.access_expires_in = access_expires if access_expires
+      token.refresh_expires_in = refresh_expires if refresh_expires
+      token.save!
     end
 
     def http_client
