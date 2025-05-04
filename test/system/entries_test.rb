@@ -18,7 +18,6 @@ class EntriesTest < ApplicationSystemTestCase
     fill_in "Currency", with: @entry.currency
     fill_in "Date", with: @entry.date
     fill_in "External", with: @entry.external_id
-    fill_in "Folder", with: @entry.folder_id
     fill_in "Message", with: @entry.message
     fill_in "Party", with: @entry.party
     click_on "Create Entry"
@@ -35,7 +34,6 @@ class EntriesTest < ApplicationSystemTestCase
     fill_in "Currency", with: @entry.currency
     fill_in "Date", with: @entry.date
     fill_in "External", with: @entry.external_id
-    fill_in "Folder", with: @entry.folder_id
     fill_in "Message", with: @entry.message
     fill_in "Party", with: @entry.party
     click_on "Update Entry"

@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   resources :perspectives, except: [ :new, :show, :edit ]
   resource :perspective_database, only: :show
 
-  resources :folders
   resources :entries
 
   # Defines the root path route ("/")

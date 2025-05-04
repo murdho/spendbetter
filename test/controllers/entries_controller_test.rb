@@ -17,7 +17,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create entry" do
     assert_difference("Entry.count") do
-      post entries_url, params: { entry: { amount: @entry.amount, currency: @entry.currency, date: @entry.date, external_id: @entry.external_id, folder_id: @entry.folder_id, message: @entry.message, party: @entry.party } }
+      post entries_url, params: { entry: { amount: @entry.amount, currency: @entry.currency, date: @entry.date, external_id: @entry.external_id, message: @entry.message, party: @entry.party } }
     end
 
     assert_redirected_to entry_url(Entry.last)
@@ -34,7 +34,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update entry" do
-    patch entry_url(@entry), params: { entry: { amount: @entry.amount, currency: @entry.currency, date: @entry.date, external_id: @entry.external_id, folder_id: @entry.folder_id, message: @entry.message, party: @entry.party } }
+    patch entry_url(@entry), params: { entry: { amount: @entry.amount, currency: @entry.currency, date: @entry.date, external_id: @entry.external_id, message: @entry.message, party: @entry.party } }
     assert_redirected_to entry_url(@entry)
   end
 

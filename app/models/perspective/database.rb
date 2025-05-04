@@ -14,11 +14,8 @@ class Perspective::Database
                  , e.message
                  , e.amount
                  , e.currency
-                 , f.name AS folder
                  , e.id AS entry_id
-                 , f.id AS folder_id
             FROM spendbetter.entries e
-            JOIN spendbetter.folders f ON f.id = e.folder_id
             ORDER BY e.date DESC
           SQL
         end

@@ -65,6 +65,6 @@ class EntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def entry_params
-      params.expect(entry: [ :date, :amount, :currency, :party, :message, :external_id, :folder_id ])
+      params.expect(entry: [ :date, :amount, :currency, :party, :message, :external_id ])
     end
 end
