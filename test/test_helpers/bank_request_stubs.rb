@@ -22,9 +22,7 @@ module BankRequestStubs
         headers: DEFAULT_RESPONSE_HEADERS,
         body: {
           access: "fresh_access_token",
-          refresh: "fresh_refresh_token",
-          access_expires: "321",
-          refresh_expires: "654"
+          access_expires: "321"
         }.to_json
       )
   end
