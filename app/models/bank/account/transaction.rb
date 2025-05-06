@@ -20,6 +20,8 @@ class Bank::Account::Transaction
   def debit? = amount.negative?
   def credit? = amount.positive?
 
+  def ==(other)= other.is_a?(self.class) && id == other.id
+
   private
     attr_reader :account, :internal_transaction_id, :booking_date, :value_date, :creditor_name, :debtor_name
 end

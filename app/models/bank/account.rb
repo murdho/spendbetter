@@ -51,6 +51,7 @@ class Bank::Account
         }.compact)
         .body
         .dig(:transactions, :booked)
+        .map { Transaction.new account: self, **it }
     end
 
     def format_date(date_or_datetime_or_string)

@@ -7,6 +7,8 @@ class Bank::AccountTest < ActiveSupport::TestCase
   setup do
     stub_token_requests
     @account = Bank::Account.new **SANDBOX_ACCOUNT_ONE
+    @debit_transaction = Bank::Account::Transaction.new(account: @account, **SANDBOX_ACCOUNT_ONE_TRANSACTIONS.first)
+    @credit_transaction = Bank::Account::Transaction.new(account: @account, **SANDBOX_ACCOUNT_ONE_TRANSACTIONS.last)
   end
 
   test "balances" do
@@ -21,13 +23,13 @@ class Bank::AccountTest < ActiveSupport::TestCase
 
   test "transactions" do
     stub_account_transactions_request SANDBOX_ACCOUNT_ONE, SANDBOX_ACCOUNT_ONE_TRANSACTIONS
-    assert_equal SANDBOX_ACCOUNT_ONE_TRANSACTIONS, @account.transactions
+    assert_equal [ @debit_transaction, @credit_transaction ], @account.transactions
   end
 
   test "transactions from/to" do
     stub_account_transactions_request \
       SANDBOX_ACCOUNT_ONE, SANDBOX_ACCOUNT_ONE_TRANSACTIONS[1..], from: "2024-12-20", to: "2024-12-27"
     transactions = @account.transactions(from: "2024-12-20", to: "2024-12-27")
-    assert_equal SANDBOX_ACCOUNT_ONE_TRANSACTIONS[1..], transactions
+    assert_equal [ @credit_transaction ], transactions
   end
 end

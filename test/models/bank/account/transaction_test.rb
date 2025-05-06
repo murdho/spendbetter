@@ -50,4 +50,10 @@ class Bank::Account::TransactionTest < ActiveSupport::TestCase
     assert_not @debit.credit?
     assert @credit.credit?
   end
+
+  test "==" do
+    assert_equal @debit, @debit.clone
+    assert_equal @credit, @credit.clone
+    assert_not_equal @debit, @credit
+  end
 end
